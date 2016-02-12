@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Message Broker Build1" default="all1">
+	<description>
+	 This ANT project will build the barfile and also will override the bar file to apply properties
+</description>
+
+	<target name="init" description="This module will initialize the required fields">
+
+
+
+		<!-- VDU Property Values -->
+		<property name="env.indicator" value="T" />
+		<property name="toolkit.home" value="C:\Program Files (x86)\IBM\IntegrationToolkit90" /> 
+<!--	<property name="toolkit.home" value="/opt/iib-10.0.0.3/tools" /> -->
+		<property name="ant.bars.basedir" value="C:\Whirlpool\BAR" />    
+<!--	<property name="ant.bars.basedir" value="/var/lib/jenkins/jobs/Whirlpool_IIB_IOT_Test/workspace/" /> -->
+<!--	check on workspace directory path issue-->
+		<property name="workspaces.dir" value="C:\Workspaces\Whirlpool02" />
+<!--	<property name="workspaces.dir" value="C:\RTCjazz\buildsystem\buildengine\eclipse\fetched\buildlabelIIB" /> 
+		<property name="workspaces.dir" value="/var/lib/jenkins/jobs/Whirlpool_IIB_IOT_Test/workspace/IIB" /> -->
+		<property name="bar.name" value="Whirlpool1.bar" />
+<!--	<property name="bar.properties.file.name" value="D_Properties.properties" /> -->
+		<property name="bar.properties.file.name" value="MQ_M2M_UPDT_MAXIMO.properties" />
+<!--	<property name="props.basedir" value="${workspaces.dir}/BuildScript/Properties" /> -->
+		<property name="props.basedir" value="C:\Whirlpool\Properties Files" />
+	</target>
+
+
+	<target name="buildBar" depends="init" description="This module will Build the Bar file">
+
+		<echo message="Building '${env.indicator}' ENV Broker Archive file: ${bar.name}" />
+	<!--    <exec executable="/opt/iib-10.0.0.3/tools/mqsicreatebar" spawn="false" failonerror="true" append="true" vmlauncher="false"> -->
+			<exec executable="C:\Program Files\IBM\IIB\10.0.0.3\tools\mqsicreatebar" spawn="false" failonerror="true" append="true" vmlauncher="false">
+			<!--  <arg value="-cleanBuild" />-->
+			<arg value="-data" />
+			<arg value="${workspaces.dir}" />
+			<arg value="-b" />
+			<arg value="${ant.bars.basedir}\${bar.name}" />
+
+
+			<arg value="-a" />
+
+			<arg value="MQ_M2M_UPDT_MAXIMO" />
+<!--			<arg value="-l" />
+
+			<arg value="ApplianceMsgs"/>
+			<arg value="EnterpriseCommon"/>  -->
+
+
+			<arg value="-deployAsSource" />
+
+
+		</exec>
+		<echo message="Completed building Broker Archive file - ${bar.name}" />
+
+	</target>
+
+	<target name="applyOverrides" depends="buildBar" description="This module will override the properties to the bar">
+
+		<echo message="Applying '${env.indicator}' ENV overrides in Broker Archive file - ${bar.name} " />
+
+<!--	<exec executable="/opt/Installable/iib-10.0.0.3/server/bin/mqsiapplybaroverride" spawn="false"> -->
+		<exec executable="C:\Program Files\IBM\IIB\10.0.0.3\server\bin\mqsiapplybaroverride" spawn="false">
+			<arg value="-b" />
+
+			<arg value="${ant.bars.basedir}\${bar.name}" />
+
+			<arg value="-k" />
+			<arg value="MQ_M2M_UPDT_MAXIMO" />  
+			<arg value="-p" />
+
+			<arg value="${props.basedir}\${bar.properties.file.name}" />
+			
+		</exec>
+
+		<echo message="Completed apply '${env.indicator}' ENV overrides in Broker Archive file - ${bar.name}" />
+
+	</target>
+
+	
+	<target name="deployBar" depends="applyOverrides">
+			<echo message="deploying '${env.indicator}' ENV  Broker Archive file - ${bar.name} " />
+		<!--<exec executable="C:\Program Files\IBM\MQSI\9.0.0.2\bin\mqsiprofile.cmd" spawn="false"></exec>-->
+		<!--<exec executable="/opt/Installable/iib-10.0.0.3/server/bin/mqsideployscript" spawn="false"> -->
+			<exec executable="C:\Program Files\IBM\IIB\10.0.0.3\server\bin\mqsideploy" spawn="false">
+				<arg value="-n"/>
+	<!--		<arg value="/var/lib/jenkins/jobs/Whirlpool_IIB_IOT_Test/workspace/DEV.broker"/> -->
+				<arg value="C:\Whirlpool\BAR\DEV.broker"/>
+				<arg value="-e"/>
+	<!--		<arg value="Build"/> -->
+				<arg value="DEVEG5"/>
+				<arg value="-a"/>
+				<arg value="${ant.bars.basedir}\${bar.name}"/>
+				<arg value="-m"/>
+				<arg value="-w"/>
+				<arg value="300"/>
+			</exec>
+			<echo message="completetd deploying '${env.indicator}' ENV  Broker Archive file - ${bar.name} " />
+
+		</target>
+	
+	<target name="all1" depends="deployBar">
+	</target>
+
+</project>

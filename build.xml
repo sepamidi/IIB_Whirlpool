@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Message Broker Build - DOCGEN" default="all">
+
+	<!--<import file="build_1.xml"/>
+	<import file="build_2.xml"/>	
+	<import file="build_3.xml"/>-->
+
+
+
+	<ant antfile="build1.xml" /> 
+<!--	<ant antfile="build_2.xml" /> -->
+<!--	<ant antfile="build_3.xml" /> -->	
+
+
+
+	<target name="all" >    
+
+	</target>
+	<!--	
+
+	<target name="call2" depends="all2">
+		<antcall target="call3"/>
+	</target>
+
+	<target name="call3" depends="all3">
+		<antcall target="call3"/>
+	</target>
+	-->
+
+<!--	<target name="all2" depends="all2"></target>
+	<target name="all3" depends="all3"></target> -->
+
+	</project>
