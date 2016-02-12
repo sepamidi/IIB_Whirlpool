@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmFilter.msgnode="ComIbmFilter.msgnode" xmlns:ComIbmTrace.msgnode="ComIbmTrace.msgnode" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="com/whirlpool/framework/CatchExceptions.subflow"
+    nsPrefix="com_whirlpool_framework_CatchExceptions.subflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" useDefaults="true" udpSupport="true">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.UDP_CatchExceptions_Trace" name="UDP_CatchExceptions_Trace" lowerBound="1" defaultValueLiteral="true">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.filePath" name="filePath" defaultValueLiteral="/tmp/mqsi/errorText.txt">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <translation xmi:type="utility:TranslatableString" key="CatchExceptions" bundleName="com/whirlpool/framework/CatchExceptions" pluginId="EnterpriseCommon"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/EnterpriseCommon/icons/full/obj16/CatchExceptions.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/EnterpriseCommon/icons/full/obj30/CatchExceptions.gif"/>
+    <composition>
+      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input" location="20,20">
+        <translation xmi:type="utility:TranslatableString" key="InTerminal.Input" bundleName="com/whirlpool/framework/CatchExceptions" pluginId="EnterpriseCommon"/>
+      </nodes>
+      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output" location="556,25">
+        <translation xmi:type="utility:TranslatableString" key="OutTerminal.Output" bundleName="com/whirlpool/framework/CatchExceptions" pluginId="EnterpriseCommon"/>
+      </nodes>
+      <nodes xmi:type="ComIbmFilter.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="172,16" filterExpression="esql://routine/com.whirlpool.framework#CatchExceptions_ProcessError.Main">
+        <translation xmi:type="utility:ConstantString" string="ProcessError"/>
+      </nodes>
+      <nodes xmi:type="ComIbmTrace.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_8" location="382,28" destination="file" filePath="/tmp/mqsi/errorText.txt" pattern="=============================================================&#xD;&#xA; ${CURRENT_TIMESTAMP} &#xD;&#xA;ExecutionGroupLabel: ${ExecutionGroupLabel}&#xD;&#xA;============================= &#xD;&#xA;EXCEPTIONS: ${ExceptionList}&#xD;&#xA;============================= &#xD;&#xA;ENVIRONMENT: ${Environment} &#xD;&#xA;=============================&#xD;&#xA;LOCAL ENVIRONMENT: ${LocalEnvironment} &#xD;&#xA;=============================&#xD;&#xA;MESSAGE:  ${Root} &#xD;&#xA;=============================">
+        <translation xmi:type="utility:ConstantString" string="Trace1"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_6" targetNode="OutTerminal.Output" sourceNode="FCMComposite_1_8" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_3" sourceNode="InTerminal.Input" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_8" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.true" targetTerminalName="InTerminal.in"/>
+    </composition>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.Trace" configurable="true" userDefined="true" describedAttribute="Property.UDP_CatchExceptions_Trace">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.UDP_CatchExceptions_Trace" bundleName="com/whirlpool/framework/CatchExceptions" pluginId="EnterpriseCommon"/>
+        <propertyDescriptor groupName="Group.Basic" configurable="true" describedAttribute="Property.filePath">
+          <propertyName xmi:type="utility:TranslatableString" key="Property.filePath" bundleName="ComIbmTrace" pluginId="com.ibm.etools.mft.ibmnodes"/>
+        </propertyDescriptor>
+      </propertyDescriptor>
+    </propertyOrganizer>
+    <attributeLinks promotedAttribute="Property.filePath" overriddenNodes="FCMComposite_1_8">
+      <overriddenAttribute href="ComIbmTrace.msgnode#Property.filePath"/>
+    </attributeLinks>
+    <stickyBoard>
+      <stickyNote location="529,132">
+        <body xmi:type="utility:ConstantString" string="Setup the error in the message tree and put into an MQOutput node or whatever."/>
+      </stickyNote>
+    </stickyBoard>
+  </eClassifiers>
+</ecore:EPackage>
