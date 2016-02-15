@@ -1,0 +1,13 @@
+BROKER SCHEMA com.whirlpool.framework
+
+
+DECLARE UDP_CatchExceptions_Trace EXTERNAL BOOLEAN FALSE;
+
+CREATE FILTER MODULE CatchExceptions_Trace_
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		RETURN UDP_CatchExceptions_Trace;
+	END;
+
+END MODULE;
+

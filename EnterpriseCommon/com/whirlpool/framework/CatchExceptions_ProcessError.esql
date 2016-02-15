@@ -1,0 +1,19 @@
+BROKER SCHEMA com.whirlpool.framework
+
+
+CREATE FILTER MODULE CatchExceptions_ProcessError
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- add one to errorCt
+		-- SET errorCt = errorCt + 1;
+		
+		-- parse the root exception information
+		CALL com.whirlpool.utilities.errorHandling.parseExceptionList(ExceptionList, Environment);
+		
+		-- setup Message Flow name for Trace.
+		SET Environment.Variables.Trace.MessageFlowLabel = SQL.MessageFlowLabel;
+		
+		RETURN TRUE;
+	END;
+
+END MODULE;

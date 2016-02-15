@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:ComIbmFileOutput.msgnode="ComIbmFileOutput.msgnode" xmlns:ComIbmMQInput.msgnode="ComIbmMQInput.msgnode" xmlns:ComIbmMQOutput.msgnode="ComIbmMQOutput.msgnode" xmlns:ComIbmWSRequest.msgnode="ComIbmWSRequest.msgnode" xmlns:com_whirlpool_framework_ErrorHandling.subflow="com/whirlpool/framework/ErrorHandling.subflow" xmlns:com_whirlpool_framework_MsgErrorQ.subflow="com/whirlpool/framework/MsgErrorQ.subflow"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="com/ibm/mq/MQ_M2M_UpdateAttribute.msgflow"
+    nsPrefix="com_ibm_mq_MQ_M2M_UpdateAttribute.msgflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.MaximoURL_ALN" name="MaximoURL_ALN" lowerBound="1" defaultValueLiteral="https://whirlpool-dev.mam.ibmserviceengage.com/maximo_b1dk/rest/mbo/CDMASSETDM/&lt;&lt;CDMASSETDMID>>?_action=AddChange&amp;ALNVALUE=&lt;&lt;VALUE>>&amp;SITEID=WHR&amp;_format=json&amp;_compact=true">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.MaximoURL_NUM" name="MaximoURL_NUM" defaultValueLiteral="https://whirlpool-dev.mam.ibmserviceengage.com/maximo_b1dk/rest/mbo/CDMASSETDM/&lt;&lt;CDMASSETDMID>>?_action=AddChange&amp;NUMVALUE=&lt;&lt;VALUE>>&amp;SITEID=WHR&amp;_format=json&amp;_compact=true">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.MaximoURL_AttrID" name="MaximoURL_AttrID" lowerBound="1" defaultValueLiteral="https://whirlpool-dev.mam.ibmserviceengage.com/maximo_b1dk/rest/mbo/ASSET/&lt;&lt;DEVID>>/ASSETDM?&amp;ATTRNAME=~eq~&lt;&lt;ATTRNAME>>&amp;_format=json&amp;_compact=true">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.Maximo_user" name="Maximo_user" lowerBound="1" defaultValueLiteral="sibdas">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.Maximo_password" name="Maximo_password" lowerBound="1" defaultValueLiteral="IBM@Sibdas2">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <translation xmi:type="utility:TranslatableString" key="MQ_M2M_UpdateAttribute" bundleName="com/ibm/mq/MQ_M2M_UpdateAttribute" pluginId="MQ_M2M_UPDT_MAXIMO"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/MQ_M2M_UPDT_MAXIMO/icons/full/obj16/MQ_M2M_UpdateAttribute.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/MQ_M2M_UPDT_MAXIMO/icons/full/obj30/MQ_M2M_UpdateAttribute.gif"/>
+    <composition>
+      <nodes xmi:type="ComIbmMQInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="31,122" queueName="MQTT_CC_M2M_MSGS" messageDomainProperty="BLOB">
+        <translation xmi:type="utility:ConstantString" string="MQTT_CC_M2M_MSGS"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="193,122" computeExpression="esql://routine/com.ibm.mq#MQ_M2M_UpdateAttribute_ParseandBuildRequest.Main" computeMode="destinationAndMessage">
+        <translation xmi:type="utility:ConstantString" string="Parse and Build Request"/>
+      </nodes>
+      <nodes xmi:type="ComIbmFileOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="346,21" outputDirectory="/tmp" outputFilename="M2MCCParsed.txt" writeMode="writeInPlace">
+        <translation xmi:type="utility:ConstantString" string="File Output"/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_5" location="359,184" queueName="MQTT_M2M_CC_PARSEDMSGS">
+        <translation xmi:type="utility:ConstantString" string="MQTT_M2M_CC_PARSEDMSGS"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="539,86" computeExpression="esql://routine/com.ibm.mq#MQ_M2M_UpdateAttribute_GetAttrId.Main" computeMode="destinationAndMessage">
+        <translation xmi:type="utility:ConstantString" string="Get Attribute ID"/>
+      </nodes>
+      <nodes xmi:type="ComIbmWSRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_7" location="650,87" URLSpecifier="https://whirlpool-dev.mam.ibmserviceengage.com/maximo_b1dk/rest/mbo/CDMASSETDM/&lt;&lt;CDMASSETDMID>>?_action=AddChange&amp;ALNVALUE=&lt;&lt;VALUE>>&amp;SITEID=WHR&amp;_format=json&amp;_compact=true" followRedirection="true" protocol="TLS">
+        <translation xmi:type="utility:ConstantString" string="HTTP Request for UpdAttr"/>
+      </nodes>
+      <nodes xmi:type="ComIbmWSRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="374,86" URLSpecifier="https://whirlpool-dev.mam.ibmserviceengage.com/maximo_b1dk/rest/mbo/ASSET/1001025/ASSETDM?&amp;ATTRNAME=~eq~CycleOptionsWHR_ManualDryTime&amp;_format=json&amp;_compact=true&amp;_lid=sibdas&amp;_lpwd=IBM@Sibdas2" followRedirection="true" httpMethod="GET" protocol="TLS" messageDomainProperty="JSON">
+        <translation xmi:type="utility:ConstantString" string="HTTP Request for AttrID"/>
+      </nodes>
+      <nodes xmi:type="com_whirlpool_framework_ErrorHandling.subflow:FCMComposite_1" xmi:id="FCMComposite_1_9" location="182,254">
+        <translation xmi:type="utility:ConstantString" string="ErrorHandling"/>
+      </nodes>
+      <nodes xmi:type="com_whirlpool_framework_MsgErrorQ.subflow:FCMComposite_1" xmi:id="FCMComposite_1_10" location="326,254" queueName="MQTT_CC_M2M_MSGS_ERROR">
+        <translation xmi:type="utility:ConstantString" string="MsgErrorQ"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_8" location="811,87" computeExpression="esql://routine/com.ibm.mq#MQ_M2M_UpdateAttribute_ProcessResponse.Main">
+        <translation xmi:type="utility:ConstantString" string="Process Response"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out1" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out2" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="FCMComposite_1_7" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_5" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_6" targetNode="FCMComposite_1_6" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_9" targetNode="FCMComposite_1_10" sourceNode="FCMComposite_1_9" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_8" sourceNode="FCMComposite_1_7" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_8" targetNode="FCMComposite_1_8" sourceNode="FCMComposite_1_7" sourceTerminalName="OutTerminal.error" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_10" targetNode="FCMComposite_1_6" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.error" targetTerminalName="InTerminal.in"/>
+    </composition>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.MaximoURL_ALN">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.MaximoURL_ALN" bundleName="com/ibm/mq/MQ_M2M_UpdateAttribute" pluginId="MQ_M2M_UPDT_MAXIMO"/>
+        <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.MaximoURL_NUM">
+          <propertyName xmi:type="utility:TranslatableString" key="Property.MaximoURL_NUM" bundleName="com/ibm/mq/MQ_M2M_UpdateAttribute" pluginId="MQ_M2M_UPDT_MAXIMO"/>
+          <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.MaximoURL_AttrID">
+            <propertyName xmi:type="utility:TranslatableString" key="Property.MaximoURL_AttrID" bundleName="com/ibm/mq/MQ_M2M_UpdateAttribute" pluginId="MQ_M2M_UPDT_MAXIMO"/>
+            <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.Maximo_user">
+              <propertyName xmi:type="utility:TranslatableString" key="Property.Maximo_user" bundleName="com/ibm/mq/MQ_M2M_UpdateAttribute" pluginId="MQ_M2M_UPDT_MAXIMO"/>
+              <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.Maximo_password">
+                <propertyName xmi:type="utility:TranslatableString" key="Property.Maximo_password" bundleName="com/ibm/mq/MQ_M2M_UpdateAttribute" pluginId="MQ_M2M_UPDT_MAXIMO"/>
+              </propertyDescriptor>
+            </propertyDescriptor>
+          </propertyDescriptor>
+        </propertyDescriptor>
+      </propertyDescriptor>
+    </propertyOrganizer>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>

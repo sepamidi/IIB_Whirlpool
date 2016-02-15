@@ -1,0 +1,95 @@
+BROKER SCHEMA com.whirlpool.utilities.errorHandling
+
+
+/*
+ * parse the exceptionList and build the root exception into a string and place it into 
+ * the env reference. 
+*/
+CREATE PROCEDURE parseExceptionList(IN exceptionListPtr REFERENCE, IN envPtr REFERENCE)	                                    
+
+BEGIN
+
+	DECLARE label CHARACTER;
+	DECLARE labelOut CHARACTER;
+	DECLARE positionOfDot INTEGER;
+	DECLARE positionOfLastDot INTEGER;                
+
+	DECLARE errorText CHARACTER;
+	DECLARE errorNumber INTEGER;
+	DECLARE errorSeverity INTEGER;
+	DECLARE flowName CHARACTER;
+	DECLARE nodeName CHARACTER;
+
+	-- point to first error
+	DECLARE errorPtr REFERENCE TO exceptionListPtr.*[1];
+
+	-- loop through the exception list looking for the last exception
+	WHILE errorPtr.Number IS NOT NULL DO
+		SET errorNumber = errorPtr.Number;          
+		-- 2949-2999 (Compute Node), 3001-3049 (Throw Node) are for the user defined errors		
+		IF (errorNumber >= 2949 AND errorNumber <> 3000 AND errorNumber <= 3049) THEN
+			IF(EXISTS(errorPtr.Insert.Text[])) THEN
+				IF LENGTH(errorPtr.Insert.Text) > 0 THEN  
+					SET errorText = REPLACE(errorPtr.Insert.Text, '   ', ' '); -- remove some blanks 
+				END IF;
+			ELSE
+				SET errorText = TRIM(errorPtr.Text);
+			END IF;
+		ELSE
+			-- use this message even if it doesn't have text - the inserts will
+--			IF LENGTH(errorPtr.Text) > 0 THEN            		
+
+			SET errorText = TRIM(errorPtr.Text);                  
+			IF EXISTS(errorPtr.Insert[]) THEN
+				DECLARE II, JJ INTEGER 1;
+				SET JJ = CARDINALITY(errorPtr.Insert[]);
+				WHILE II <= JJ DO
+					SET errorText = errorText || ', ' || errorPtr.Insert[II].Text;
+					SET II = II + 1;
+				END WHILE;
+			END IF;
+			SET errorText = errorText;
+
+--			END IF;
+		END IF;  
+		SET errorSeverity = errorPtr.Severity;
+		        
+		-- Load the name of the label		
+		SET label = errorPtr.Label;
+		-- Move errorPtr to the last child of the field to which it currently points
+	
+		MOVE errorPtr LASTCHILD;         
+
+	END WHILE;     
+
+	SET positionOfLastDot = POSITION('.' IN label REPEAT -1);
+
+	DECLARE label2 CHARACTER SUBSTRING(label FROM (positionOfLastDot+1));                
+	
+	IF LENGTH(label2) > 0 THEN          	
+
+		IF (positionOfLastDot < 1) THEN
+			SET flowName = '??';
+		ELSE
+			SET flowName=SUBSTRING(label FROM 1 FOR (positionOfLastDot-1));
+		END IF;
+		SET nodeName=SUBSTRING(label FROM (positionOfLastDot+1));
+
+	END IF;
+	
+	-- save everything in the Environment
+	SET envPtr.CurrentError = '';
+	DECLARE outputMsg REFERENCE TO envPtr.CurrentError;
+
+	SET outputMsg.Text = COALESCE(errorText, '');
+	SET outputMsg.ErrorNum = errorNumber;
+	SET outputMsg.Severity = errorSeverity;
+	SET outputMsg.Date = CURRENT_TIMESTAMP;
+--  SET outputMsg.MsgData = ASBITSTREAM(InputRoot);
+	SET outputMsg.Flow = flowName;
+	SET outputMsg.Node = nodeName;
+	SET outputMsg.ExceptionList = exceptionListPtr;
+--	SET outputMsg.QM = QueueManagerName;
+	             
+
+END;	
