@@ -19,6 +19,11 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
+			<name>com.ibm.etools.mft.connector.policy.ui.PolicyBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
 			<name>com.ibm.etools.mft.applib.mbprojectbuilder</name>
 			<arguments>
 			</arguments>
@@ -80,6 +85,11 @@
 		</buildCommand>
 		<buildCommand>
 			<name>com.ibm.etools.mft.bar.ext.barbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.ibm.etools.mft.unittest.ui.TestCaseBuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>

@@ -16,7 +16,22 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
+			<name>com.ibm.etools.mft.connector.policy.ui.PolicyBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
 			<name>com.ibm.etools.mft.connector.ui.editor.connectorServiceBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.ibm.etools.mft.connector.ui.editor.connectorEventBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.ibm.etools.mft.uri.sharedlibbuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -82,6 +97,11 @@
 		</buildCommand>
 		<buildCommand>
 			<name>com.ibm.etools.mft.bar.ext.barbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.ibm.etools.mft.unittest.ui.TestCaseBuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
