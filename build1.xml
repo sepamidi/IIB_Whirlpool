@@ -52,7 +52,7 @@
 
 		<echo message="Applying '${env.indicator}' ENV overrides in Broker Archive file - ${bar.name} " />
 
-		<exec executable="C:\Program Files\IBM\IIB\10.0.0.3\server\bin\mqsiapplybaroverride" spawn="false">
+		<exec executable="C:\Program Files\IBM\IIB\10.0.0.3\server\bin\mqsiapplybaroverride.bat" spawn="false">
 			<arg value="-b" />
 
 			<arg value="${ant.bars.basedir}\${bar.name}" />
